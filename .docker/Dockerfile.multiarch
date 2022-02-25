@@ -23,13 +23,13 @@ COPY --from=builder /app /app
 
 WORKDIR /app
 
-RUN chown -R node:node .
+RUN apk add --no-cache shadow
 
 EXPOSE 5005
 
-USER node
-
 ENV NODE_ENV=production
 ENV PASSWORD=flame_password
+ENV PUID=1000
+ENV PGID=1000
 
-CMD ["sh", "-c", "chown -R node /app/data && node server.js"]
+CMD ["/app/start.sh"]
